@@ -146,13 +146,10 @@ getUpdates() {
         "allowed_updates": ["callback_query"]
     }')
   
-  # search for a:$SESSION_ID or r:$SESSION_ID
-  local APPROVE=$(echo $UPDATES | grep -o "a:$SESSION_ID")
-  local REJECT=$(echo $UPDATES | grep -o "r:$SESSION_ID")
-
-  # if not found, return 0
-  # if found approve, return 1
-  # if found reject, return 2
+  # search for a:$SESSION_ID or r:$SESSION_ID as: "data": "r:xxxxxxxxx"
+  local DATA=$(echo $UPDATES | awk -F '"data":' '{print $2}' | awk -F '}' '{print $1}')
+  local APPROVE=$(echo $DATA | grep -o "a:$SESSION_ID")
+  local REJECT=$(echo $DATA | grep -o "r:$SESSION_ID")
 
   if [ -z "$APPROVE" ] && [ -z "$REJECT" ]; then
     echo 0
@@ -182,6 +179,7 @@ sendMessage
 UPDATE_REQUESTS_COUNTER=0
 while true; do
   RESULT=$(getUpdates)
+  echo "Result: $RESULT"
 
   if [ $RESULT -eq 1 ]; then
     echo "Approved"
