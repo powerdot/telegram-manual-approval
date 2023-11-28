@@ -10,7 +10,7 @@ inputs:
   UPDATE_REQUESTS:
     description: 'Limit of updates (1 ~ 1 sec)'
     required: false
-    default: 60
+    default: "60"
   APPROVAL_TEXT:
     description: 'Text of message'
     required: false

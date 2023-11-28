@@ -28,6 +28,7 @@ while true; do
   if [[ $1 == ' ' ]]; then
     break;
   fi
+  echo "$1 => $2"
   case "$1" in
     --TELEGRAM_KEY)
       TELEGRAM_KEY="$2"
@@ -123,7 +124,7 @@ sendMessage() {
         "reply_markup": {
             "inline_keyboard": [
                 [
-                    {"text": "'"$APPROVAL_BUTTON"'", "callback_data": "a:'"$SESSION_ID"'"}
+                    {"text": "'"$APPROVAL_BUTTON"'", "callback_data": "a:'"$SESSION_ID"'"},
                     {"text": "'"$REJECT_BUTTON"'", "callback_data": "r:'"$SESSION_ID"'"}
                 ]
             ]
