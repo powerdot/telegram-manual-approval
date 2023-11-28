@@ -1,0 +1,42 @@
+name: 'Telegram approval'
+description: 'Approuve deployment or other actions by TG message'
+inputs:
+  TELEGRAM_KEY:
+    description: 'Telegram Bot key'
+    required: true
+  TELEGRAM_CHAT_ID:
+    description: 'Telegram chat ID to send message'
+    required: true
+  UPDATE_REQUESTS:
+    description: 'Limit of updates (1 ~ 1 sec)'
+    required: false
+    default: 60
+  APPROVAL_TEXT:
+    description: 'Text of message'
+    required: false
+    default: 'Please approve deployment:'
+  APPROVAL_BUTTON:
+    description: 'Text of approval button'
+    required: false
+    default: 'Approve'
+  REJECT_BUTTON:
+    description: 'Text of rejection button'
+    required: false
+    default: 'Reject'
+  APPROVED_TEXT:
+    description: 'Text of successful approved'
+    required: false
+    default: 'Approved!'
+  REJECTED_TEXT:
+    description: 'Text of successful rejected'
+    required: false
+    default: 'Rejected!'
+  TIMEOUT_TEXT:
+    description: 'Text of timeout'
+    required: false
+    default: 'Timeout!'
+runs:
+  using: "composite"
+  steps:
+    - run: main.sh --TELEGRAM_KEY ${{ inputs.TELEGRAM_KEY }} --TELEGRAM_CHAT_ID ${{ inputs.TELEGRAM_CHAT_ID }} --UPDATE_REQUESTS ${{ inputs.UPDATE_REQUESTS }} --APPROVAL_TEXT ${{ inputs.APPROVAL_TEXT }} --APPROVAL_BUTTON ${{ inputs.APPROVAL_BUTTON }} --REJECT_BUTTON ${{ inputs.REJECT_BUTTON }} --APPROVED_TEXT ${{ inputs.APPROVED_TEXT }} --REJECTED_TEXT ${{ inputs.REJECTED_TEXT }} --TIMEOUT_TEXT ${{ inputs.TIMEOUT_TEXT }}
+      shell: bash
