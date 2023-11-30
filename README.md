@@ -57,11 +57,27 @@ Additionally, the `UPDATE_REQUESTS` input is not a direct timeout setting but ra
 
 Ensure that the GitHub token used by the action has permissions to send messages via Telegram Bot API. You may not need to set any special permissions in your GitHub workflow for this action unless your workflow requires additional steps that interact with the GitHub environment.
 
-## Limitations
-
-- The maximum wait time for an approval is determined by the `timeout-minutes` you set for the step. Please ensure that this duration is reasonable to allow adequate time for manual approval.
-- Similar to other workflow steps, if the manual approval step times out, the workflow run will fail.
-- To protect your Telegram Bot API key, always use GitHub repository secrets to store it instead of hardcoding it in your workflow files.
+### Quick example
+```yaml
+name: My job
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo
+        run: |
+            echo "Hello World"
+      - uses: powerdot/telegram-manual-approval@main
+        with:
+          TELEGRAM_KEY: "${{ secrets.TELEGRAM_KEY }}"
+          TELEGRAM_CHAT_ID: '540443'
+      - name: Echo2
+        run: |
+          echo "Hello World2"
+```
 
 ## Development and Contribution
 We welcome contributions and improvements from the community!
