@@ -1,5 +1,5 @@
 name: 'Telegram Manual Approval'
-description: 'Allows for manual approval of workflows via Telegram, offering a quick, secure way to control critical operations from within chat.'
+description: 'Allows for manual approval of workflows via Telegram within chat.'
 inputs:
   TELEGRAM_KEY:
     description: 'Telegram Bot key'
