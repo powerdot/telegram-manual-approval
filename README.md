@@ -2,7 +2,7 @@
 
 [@viz-A-viz](https://github.com/viz-A-viz) 🤜🤛 [@powerdot](https://github.com/powerdot)
 
-![Concept](about.jpg)
+![Concept](about.png)
 
 Obtain manual approval for GitHub Actions workflows through Telegram messages. This action pauses a workflow and requires a manual response via Telegram to continue.
 
