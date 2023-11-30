@@ -1,6 +1,6 @@
 # Telegram Manual Approval
 
-![Workflow Status](https://github.com/powerdot/telegram-manual-approval/actions/workflows/main.yml/badge.svg)
+[@viz-A-viz](https://github.com/viz-A-viz) 🤜🤛 [@powerdot](https://github.com/powerdot)
 
 Obtain manual approval for GitHub Actions workflows through Telegram messages. This action pauses a workflow and requires a manual response via Telegram to continue.
 
