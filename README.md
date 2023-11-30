@@ -24,12 +24,6 @@ steps:
     with:
       TELEGRAM_KEY: ${{ secrets.TELEGRAM_KEY }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-      APPROVAL_TEXT: 'Please approve deployment:'
-      APPROVAL_BUTTON: 'Approve'
-      REJECT_BUTTON: 'Reject'
-      APPROVED_TEXT: 'Approved!'
-      REJECTED_TEXT: 'Rejected!'
-      TIMEOUT_TEXT: 'Timeout!'
 ```
 
 Configure the inputs to customize the Telegram message:
@@ -41,6 +35,7 @@ Configure the inputs to customize the Telegram message:
 - `APPROVED_TEXT`: Message to indicate successful approval.
 - `REJECTED_TEXT`: Message to indicate successful rejection.
 - `TIMEOUT_TEXT`: Message to indicate a timeout if no response is received.
+- `UPDATE_REQUESTS`: The number of update requests the action will make to check for manual approval or rejection via Telegram. This is not a strict timeout but rather a count of checks, with each request occurring approximately every 1 to 2 seconds.
 
 You can also set a timeout limit for the approval step using `timeout-minutes` in your workflow file:
 
@@ -52,7 +47,11 @@ steps:
       ...
 ```
 
-*Note: The default value for `UPDATE_REQUESTS` is 60, which corresponds to a one-minute timeout waiting for a response. Adjust this value according to your preference.*
+Please note that the `TIMEOUT_TEXT` message is specifically related to the `UPDATE_REQUESTS` input and will only be sent if the maximum number of update requests is reached before a manual approval or rejection is received via Telegram. It does not correspond to the `timeout-minutes` parameter of the workflow step.
+
+The `timeout-minutes` parameter in your workflow determines the maximum duration that the action will wait for an approval response before the step times out. If this workflow step timeout is reached without an approval or rejection, the action will simply cease to operate and will not send the `TIMEOUT_TEXT` message.
+
+Additionally, the `UPDATE_REQUESTS` input is not a direct timeout setting but rather represents the limit of update checks the action will perform. It is set to a default of 60, which typically corresponds to a duration of 60 to 120 seconds depending on network conditions and server response times, as each update request is expected to occur roughly every 1 to 2 seconds. Adjust the `UPDATE_REQUESTS` value according to how long you want the action to wait for a response in Telegram before considering it a timeout situation and sending the `TIMEOUT_TEXT` message.
 
 ### Permissions
 
@@ -65,9 +64,6 @@ Ensure that the GitHub token used by the action has permissions to send messages
 - To protect your Telegram Bot API key, always use GitHub repository secrets to store it instead of hardcoding it in your workflow files.
 
 ## Development and Contribution
-
-If you're interested in contributing to the development of this GitHub Action, please refer to the `CONTRIBUTING.md` file in this repository for more details on how you can contribute.
-
 We welcome contributions and improvements from the community!
 
 ---
