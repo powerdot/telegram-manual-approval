@@ -1,5 +1,8 @@
 name: 'Telegram Manual Approval'
 description: 'Allows for manual approval of workflows via Telegram within chat.'
+branding:
+  icon: pause
+  color: blue
 inputs:
   TELEGRAM_KEY:
     description: 'Telegram Bot key'
