@@ -88,7 +88,3 @@ This GitHub Action is provided "as is" with no warranty. Usage of this action is
 For support and contributions, feel free to open an issue or a pull request in the [repository](https://github.com/powerdot/telegram-manual-approval).
 
 Good luck with automating your workflows!
-
----
-
-*(Note: Consider adjusting the example and the variable names to match the specifics of your actual GitHub Action implementation. The example above presumes that you've defined the inputs in your `action.yml` and have a corresponding `main.sh` script that will handle the Telegram interactions.)*
