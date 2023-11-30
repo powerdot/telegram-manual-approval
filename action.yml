@@ -1,4 +1,4 @@
-name: 'Telegram approval'
+name: 'Telegram Manual Approval'
 description: 'Approuve deployment or other actions by TG message'
 inputs:
   TELEGRAM_KEY:
