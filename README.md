@@ -73,7 +73,7 @@ jobs:
       - uses: powerdot/telegram-manual-approval@main
         with:
           TELEGRAM_KEY: "${{ secrets.TELEGRAM_KEY }}"
-          TELEGRAM_CHAT_ID: '540443'
+          TELEGRAM_CHAT_ID: "${{ secrets.TELEGRAM_CHAT_ID }}"
       - name: Echo2
         run: |
           echo "Hello World2"
