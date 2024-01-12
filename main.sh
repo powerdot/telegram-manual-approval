@@ -161,7 +161,7 @@ getUpdates() {
 }
 
 updateMessage() {
-  local text=$1
+  local text="$1"
 
   curl -s --location --request POST "https://api.telegram.org/bot$TELEGRAM_KEY/editMessageText" \
     --header 'Content-Type: application/json' \
@@ -183,17 +183,17 @@ while true; do
 
   if [ $RESULT -eq 1 ]; then
     echo "Approved"
-    updateMessage $APPROVED_TEXT
+    updateMessage "$APPROVED_TEXT"
     exit 0
   elif [ $RESULT -eq 2 ]; then
     echo "Rejected"
-    updateMessage $REJECTED_TEXT
+    updateMessage "$REJECTED_TEXT"
     exit 1
   fi
 
   if [ $UPDATE_REQUESTS_COUNTER -gt $UPDATE_REQUESTS ]; then
     echo "Update requests limit reached"
-    updateMessage $TIMEOUT_TEXT
+    updateMessage "$TIMEOUT_TEXT"
     exit 1
   fi
   UPDATE_REQUESTS_COUNTER=$((UPDATE_REQUESTS_COUNTER + 1))
