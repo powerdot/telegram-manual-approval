@@ -36,6 +36,12 @@ Configure the inputs to customize the Telegram message:
 - `REJECTED_TEXT`: Message to indicate successful rejection.
 - `TIMEOUT_TEXT`: Message to indicate a timeout if no response is received.
 - `UPDATE_REQUESTS`: The number of update requests the action will make to check for manual approval or rejection via Telegram. This is not a strict timeout but rather a count of checks, with each request occurring approximately every 1 to 2 seconds.
+- `GITHUB_USERNAME_TO_TELEGRAM_USER_ID`: Mapping of GitHub usernames to Telegram user IDs (format: `user1:123,user2:456` or newline-separated).
+- `ALLOWED_APPROVERS`: Comma or newline-separated list of GitHub usernames that can approve.
+- `EXCLUDE_WORKFLOW_INITIATOR_AS_APPROVER`: When `true`, excludes the workflow initiator (`GITHUB_ACTOR`) from approval unless they are in `SUPER_APPROVERS`.
+- `SUPER_APPROVERS`: Comma or newline-separated list of GitHub usernames that can approve even when the initiator is excluded.
+- `APPROVAL_THRESHOLD`: Number of distinct approvers required to approve (default: `1`).
+- `REJECT_REASON_REQUIRED`: When `true`, requests a rejection reason via Telegram reply and includes it in the final message.
 
 You can also set a timeout limit for the approval step using `timeout-minutes` in your workflow file:
 
@@ -77,6 +83,25 @@ jobs:
       - name: Echo2
         run: |
           echo "Hello World2"
+```
+
+### Approver controls example
+
+```yaml
+      - uses: powerdot/telegram-manual-approval@main
+        with:
+          TELEGRAM_KEY: "${{ secrets.TELEGRAM_KEY }}"
+          TELEGRAM_CHAT_ID: "${{ secrets.TELEGRAM_CHAT_ID }}"
+          GITHUB_USERNAME_TO_TELEGRAM_USER_ID: |
+            powerdot:12300303
+            khasanovbi:12300304
+          ALLOWED_APPROVERS: |
+            powerdot
+            khasanovbi
+          EXCLUDE_WORKFLOW_INITIATOR_AS_APPROVER: true
+          SUPER_APPROVERS: khasanovbi
+          APPROVAL_THRESHOLD: 2
+          REJECT_REASON_REQUIRED: true
 ```
 
 ## Development and Contribution

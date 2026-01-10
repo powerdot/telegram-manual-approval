@@ -38,8 +38,32 @@ inputs:
     description: 'Text of timeout'
     required: false
     default: 'Timeout!'
+  GITHUB_USERNAME_TO_TELEGRAM_USER_ID:
+    description: 'Mapping of GitHub usernames to Telegram user IDs (e.g. "user1:123,user2:456")'
+    required: false
+    default: ''
+  ALLOWED_APPROVERS:
+    description: 'Comma or newline separated list of GitHub usernames allowed to approve'
+    required: false
+    default: ''
+  EXCLUDE_WORKFLOW_INITIATOR_AS_APPROVER:
+    description: 'Exclude workflow initiator (GITHUB_ACTOR) from approvers'
+    required: false
+    default: 'false'
+  SUPER_APPROVERS:
+    description: 'Comma or newline separated list of GitHub usernames allowed to bypass initiator exclusion'
+    required: false
+    default: ''
+  APPROVAL_THRESHOLD:
+    description: 'Number of distinct approvers required to approve'
+    required: false
+    default: '1'
+  REJECT_REASON_REQUIRED:
+    description: 'Require a rejection reason via Telegram reply'
+    required: false
+    default: 'false'
 runs:
   using: "composite"
   steps:
-    - run: $GITHUB_ACTION_PATH/main.sh --TELEGRAM_KEY ${{ inputs.TELEGRAM_KEY }} --TELEGRAM_CHAT_ID ${{ inputs.TELEGRAM_CHAT_ID }} --UPDATE_REQUESTS ${{ inputs.UPDATE_REQUESTS }} --APPROVAL_TEXT "${{ inputs.APPROVAL_TEXT }}" --APPROVAL_BUTTON "${{ inputs.APPROVAL_BUTTON }}" --REJECT_BUTTON "${{ inputs.REJECT_BUTTON }}" --APPROVED_TEXT "${{ inputs.APPROVED_TEXT }}" --REJECTED_TEXT "${{ inputs.REJECTED_TEXT }}" --TIMEOUT_TEXT "${{ inputs.TIMEOUT_TEXT }}"
+    - run: $GITHUB_ACTION_PATH/main.sh --TELEGRAM_KEY ${{ inputs.TELEGRAM_KEY }} --TELEGRAM_CHAT_ID ${{ inputs.TELEGRAM_CHAT_ID }} --UPDATE_REQUESTS ${{ inputs.UPDATE_REQUESTS }} --APPROVAL_TEXT "${{ inputs.APPROVAL_TEXT }}" --APPROVAL_BUTTON "${{ inputs.APPROVAL_BUTTON }}" --REJECT_BUTTON "${{ inputs.REJECT_BUTTON }}" --APPROVED_TEXT "${{ inputs.APPROVED_TEXT }}" --REJECTED_TEXT "${{ inputs.REJECTED_TEXT }}" --TIMEOUT_TEXT "${{ inputs.TIMEOUT_TEXT }}" --GITHUB_USERNAME_TO_TELEGRAM_USER_ID "${{ inputs.GITHUB_USERNAME_TO_TELEGRAM_USER_ID }}" --ALLOWED_APPROVERS "${{ inputs.ALLOWED_APPROVERS }}" --EXCLUDE_WORKFLOW_INITIATOR_AS_APPROVER "${{ inputs.EXCLUDE_WORKFLOW_INITIATOR_AS_APPROVER }}" --SUPER_APPROVERS "${{ inputs.SUPER_APPROVERS }}" --APPROVAL_THRESHOLD "${{ inputs.APPROVAL_THRESHOLD }}" --REJECT_REASON_REQUIRED "${{ inputs.REJECT_REASON_REQUIRED }}"
       shell: bash
