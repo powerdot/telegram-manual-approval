@@ -38,8 +38,38 @@ inputs:
     description: 'Text of timeout'
     required: false
     default: 'Timeout!'
+  ALLOW_GITHUB_RERUN_ON_TIMEOUT:
+    description: 'Allow a GitHub workflow rerun button after timeout'
+    required: false
+    default: 'true'
+  RERUN_BUTTON:
+    description: 'Text of GitHub rerun button'
+    required: false
+    default: 'Rerun workflow'
+  RERUN_TEXT:
+    description: 'Text shown when rerun is requested'
+    required: false
+    default: 'Rerun requested.'
+  RERUN_FAILED_TEXT:
+    description: 'Text shown when rerun fails'
+    required: false
+    default: 'Rerun failed.'
+  GITHUB_TOKEN:
+    description: 'GitHub token used to rerun workflows'
+    required: false
+    default: ''
+  RERUN_WORKFLOW_FILE:
+    description: 'Workflow file to dispatch on rerun (e.g. deploy.yml)'
+    required: false
+    default: ''
+  RERUN_REF:
+    description: 'Ref to use for workflow dispatch (branch or tag)'
+    required: false
+    default: ''
 runs:
   using: "composite"
   steps:
-    - run: $GITHUB_ACTION_PATH/main.sh --TELEGRAM_KEY ${{ inputs.TELEGRAM_KEY }} --TELEGRAM_CHAT_ID ${{ inputs.TELEGRAM_CHAT_ID }} --UPDATE_REQUESTS ${{ inputs.UPDATE_REQUESTS }} --APPROVAL_TEXT "${{ inputs.APPROVAL_TEXT }}" --APPROVAL_BUTTON "${{ inputs.APPROVAL_BUTTON }}" --REJECT_BUTTON "${{ inputs.REJECT_BUTTON }}" --APPROVED_TEXT "${{ inputs.APPROVED_TEXT }}" --REJECTED_TEXT "${{ inputs.REJECTED_TEXT }}" --TIMEOUT_TEXT "${{ inputs.TIMEOUT_TEXT }}"
+    - run: $GITHUB_ACTION_PATH/main.sh --TELEGRAM_KEY ${{ inputs.TELEGRAM_KEY }} --TELEGRAM_CHAT_ID ${{ inputs.TELEGRAM_CHAT_ID }} --UPDATE_REQUESTS ${{ inputs.UPDATE_REQUESTS }} --APPROVAL_TEXT "${{ inputs.APPROVAL_TEXT }}" --APPROVAL_BUTTON "${{ inputs.APPROVAL_BUTTON }}" --REJECT_BUTTON "${{ inputs.REJECT_BUTTON }}" --APPROVED_TEXT "${{ inputs.APPROVED_TEXT }}" --REJECTED_TEXT "${{ inputs.REJECTED_TEXT }}" --TIMEOUT_TEXT "${{ inputs.TIMEOUT_TEXT }}" --ALLOW_GITHUB_RERUN_ON_TIMEOUT ${{ inputs.ALLOW_GITHUB_RERUN_ON_TIMEOUT }} --RERUN_BUTTON "${{ inputs.RERUN_BUTTON }}" --RERUN_TEXT "${{ inputs.RERUN_TEXT }}" --RERUN_FAILED_TEXT "${{ inputs.RERUN_FAILED_TEXT }}" --RERUN_WORKFLOW_FILE "${{ inputs.RERUN_WORKFLOW_FILE }}" --RERUN_REF "${{ inputs.RERUN_REF }}"
       shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN || github.token }}
